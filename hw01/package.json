@@ -1,0 +1,22 @@
+{
+  "name": "hw01",
+  "version": "1.0.0",
+  "description": "etchasketch for Homework 1",
+  "main": "etchasketch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamwiesler/ECE497AW.git"
+  },
+  "author": "Adam Wiesler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adamwiesler/ECE497AW/issues"
+  },
+  "homepage": "https://github.com/adamwiesler/ECE497AW#readme",
+  "dependencies": {
+    "cli-color": "^1.2.0"
+  }
+}
