@@ -36,10 +36,10 @@ win1.refresh()
 def clear():
     global win2
     global position
-    for y in range(0, gridSizeCol+2):
-        for x in range(0, gridSizeRow+2):
+    for y in range(0, gridSizeRow+2):
+        for x in range(0, gridSizeCol+2):
             try:
-                if (x==0 or x == gridSizeRow+1) or (y==0 or y == gridSizeCol+1):
+                if (x==0 or x == gridSizeCol+1) or (y==0 or y == gridSizeRow+1):
                     win2.addch(y,x, '*')
                 else:
                     win2.addch(y,x, ' ')
