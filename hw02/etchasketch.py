@@ -22,15 +22,20 @@ import Adafruit_BBIO.GPIO as GPIO
 
 #Setup the display using curses
 stdscr = curses.initscr()
+curses.start_color()
+curses.init_pair(1, curses.COLOR_RED, curses.COLOR_WHITE)
+curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)
+curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLUE)
+
 curses.noecho()
 curses.cbreak()
 stdscr.keypad(1)
 
 #Create first window at top left for instructions:
 win1 = curses.newwin(3, 70, 0, 0)
-win1.addstr(0, 0, "Use buttons connected to GP0 to move around")
-win1.addstr(1, 0, "Pressing GP0_4 and GP0_6 at the same time clears the display.")
-win1.addstr(2, 0, "Pressing GP0_3 and GP0_5 at the same time exits the program.")
+win1.addstr(0, 0, "Use buttons connected to GP0 to move around                    ",curses.color_pair(1))
+win1.addstr(1, 0, "Pressing GP0_4 and GP0_6 at the same time clears the display.  ",curses.color_pair(1))
+win1.addstr(2, 0, "Pressing GP0_3 and GP0_5 at the same time exits the program.   ",curses.color_pair(1))
 win1.refresh()
 
 def clear():
@@ -40,14 +45,14 @@ def clear():
         for x in range(0, gridSizeCol+2):
             try:
                 if (x==0 or x == gridSizeCol+1) or (y==0 or y == gridSizeRow+1):
-                    win2.addch(y,x, '*')
+                    win2.addstr(y,x, '*',curses.color_pair(2))
                 else:
-                    win2.addch(y,x, ' ')
+                    win2.addstr(y,x, ' ',curses.color_pair(2))
             except curses.error:
                 pass   
     win2.refresh()
     position = [0,0]
-    win2.addch(position[0]+1,position[1]+1,'X')
+    win2.addstr(position[0]+1,position[1]+1,'X',curses.color_pair(3))
     win2.move(position[0]+1,position[1]+1)
     win2.refresh()
 
@@ -59,7 +64,7 @@ clear()
 
 
 #Setup buttons and move directions:
-buttons = ["PAUSE","GP0_4","GP0_5","GP0_6"]
+buttons = ["GP0_3","GP0_4","GP0_5","GP0_6"]
 directions = [[1,0],[-1,0],[0,1],[0,-1]]
 GPIOEdges = [GPIO.FALLING, GPIO.RISING,GPIO.FALLING, GPIO.RISING]
 buttonPressedVal = [0, 1, 0, 1]
@@ -99,7 +104,7 @@ def move(row, col):
     #    return
 
     #print("Position = ", position)
-    win2.addch(position[0]+1,position[1]+1,'X')
+    win2.addstr(position[0]+1,position[1]+1,'X',curses.color_pair(3))
     win2.move(position[0]+1,position[1]+1)
     win2.refresh()
 
