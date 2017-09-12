@@ -22,3 +22,6 @@ Then, run
 
 replacing #rows and #cols with the number of rows and columns wanted (defaults to 8x8).
 
+// Comment from Prof. Yoder
+// Nice use of color in the JavaScript
+// Grade:  10/10
