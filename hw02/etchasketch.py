@@ -20,6 +20,42 @@ import curses
 # Import PyBBIO library:
 import Adafruit_BBIO.GPIO as GPIO
 
+#Setup the display using curses
+stdscr = curses.initscr()
+curses.noecho()
+curses.cbreak()
+stdscr.keypad(1)
+
+#Create first window at top left for instructions:
+win1 = curses.newwin(3, 70, 0, 0)
+win1.addstr(0, 0, "Use buttons connected to GP0 to move around")
+win1.addstr(1, 0, "Pressing GP0_4 and GP0_6 at the same time clears the display.")
+win1.addstr(2, 0, "Pressing GP0_3 and GP0_5 at the same time exits the program.")
+win1.refresh()
+
+def clear():
+    global win2
+    global position
+    for y in range(0, gridSizeCol+2):
+        for x in range(0, gridSizeRow+2):
+            try:
+                if (x==0 or x == gridSizeRow+1) or (y==0 or y == gridSizeCol+1):
+                    win2.addch(y,x, '*')
+                else:
+                    win2.addch(y,x, ' ')
+            except curses.error:
+                pass   
+    win2.refresh()
+    position = [0,0]
+    win2.addch(position[0]+1,position[1]+1,'X')
+    win2.move(position[0]+1,position[1]+1)
+    win2.refresh()
+
+
+#Create second Window and clear
+win2 = curses.newwin(gridSizeRow+2,gridSizeCol+2, 4, 0)
+clear()
+
 
 
 #Setup buttons and move directions:
@@ -52,25 +88,29 @@ for x in buttons[:]:
 
 def move(row, col):
     global position
+    global win2
     workingPositon = [position[0]+row,position[1]+col]
     workingPositon[0] = min(gridSizeRow-1,max(0,workingPositon[0]))
     workingPositon[1] = min(gridSizeCol-1,max(0,workingPositon[1]))
     position = workingPositon;
     
-    print("Position = ", position)
     
-    if (position[0] == workingPositon[0]) and (position[1] == workingPositon[1]):
-        return
+    #if (position[0] == workingPositon[0]) and (position[1] == workingPositon[1]):
+    #    return
+
+    #print("Position = ", position)
+    win2.addch(position[0]+1,position[1]+1,'X')
+    win2.move(position[0]+1,position[1]+1)
+    win2.refresh()
+
 
     return
 
-def clear():
-    print("Clearing...")
 
 def leave():
-    print("leaving")
-    #curses.nocbreak(); stdscr.keypad(0); curses.echo()
-    #curses.endwin()
+    #print("leaving")
+    curses.nocbreak(); stdscr.keypad(0); curses.echo()
+    curses.endwin()
     GPIO.cleanup()
     exit()
     
@@ -81,33 +121,8 @@ try:
         time.sleep(100)   # Let other processes run
 
 except KeyboardInterrupt:
-    print("Cleaning Up")
+    #print("Cleaning Up")
     GPIO.cleanup()
     leave()
 GPIO.cleanup()
 exit()
-
-
-
-#Setup the display using curses
-stdscr = curses.initscr()
-curses.noecho()
-curses.cbreak()
-stdscr.keypad(1)
-
-
-pad = curses.newpad(100, 100)
-#  These loops fill the pad with letters; this is
-# explained in the next section
-for y in range(0, 100):
-    for x in range(0, 100):
-        try:
-            pad.addch(y,x, ord('a') + (x*x+y*y) % 26)
-        except curses.error:
-            pass
-
-#  Displays a section of the pad in the middle of the screen
-pad.refresh(0,0, 5,5, 20,75)
-
-
-
