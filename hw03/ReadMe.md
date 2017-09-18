@@ -1,7 +1,7 @@
 # Homework hw03:
 
 Part 1:
-"python3 etchasketch_LED.py" is my version of getting the TMP101s to talk to the beaglebone.
+"python3 tmp101_alert.py" is my version of getting the TMP101s to talk to the beaglebone.
 
 The TMP101 can appear as 3 different addresses on an i2c bus. If the ADDR pin is grounded, it is 0x48. If its floating, its 0x49, and if its pulled to VDD, its 0x4a.
 I connected mine such that they are on 0x49 and 0x4a.
