@@ -1,4 +1,5 @@
 // From : http://stackoverflow.com/questions/13124271/driving-beaglebone-gpio-through-dev-mem
+//Modified by Adam Wiesler to include all 4 GPIO ports and additional mappings for BBBlue
 #ifndef _BEAGLEBONE_GPIO_H_
 #define _BEAGLEBONE_GPIO_H_
 
@@ -10,6 +11,14 @@
 #define GPIO1_START_ADDR 0x4804C000
 #define GPIO1_END_ADDR 0x4804e000
 #define GPIO1_SIZE (GPIO1_END_ADDR - GPIO1_START_ADDR)
+
+#define GPIO2_START_ADDR 0x481AC000
+#define GPIO2_END_ADDR 0x481AE000
+#define GPIO2_SIZE (GPIO2_END_ADDR - GPIO2_START_ADDR)
+
+#define GPIO3_START_ADDR 0x481AE000
+#define GPIO3_END_ADDR 0x481B0000
+#define GPIO3_SIZE (GPIO3_END_ADDR - GPIO3_START_ADDR)
 
 #define GPIO_OE 0x134
 #define GPIO_DATAIN 0x138
@@ -25,6 +34,10 @@
 #define GPIO_60 (1<<28)
 #define PAUSE (1<<5)
 #define MODE (1<<4)
+
+#define GP0_3 (1<<25)
+#define GP0_4 (1<<17)
+
 
 #define LEDRED (1<<2)
 #define LEDGREEN (1<<3)
