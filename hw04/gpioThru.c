@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 
 
 
-    printf("Start copying GPIO_07 to GPIO_03\n");
+    printf("Copying PAUSE button and GP0_3 to RED and GREEN LEDs on BBBlue\n");
     while(keepgoing) {
     	if(*gpio_datain_0 & PAUSE) {
             *gpio_setdataout_addr_0= LEDGREEN;
