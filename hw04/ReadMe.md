@@ -1,19 +1,20 @@
-# Homework hw03:
+# Homework hw04:
 
-### Part 1:
-"python3 tmp101_alert.py" is my version of getting the TMP101s to talk to the beaglebone.
+### Part 1,  Memory Map:
 
-The TMP101 can appear as 3 different addresses on an i2c bus. If the ADDR pin is grounded, it is 0x48. If its floating, its 0x49, and if its pulled to VDD, its 0x4a.
-I connected mine such that they are on 0x49 and 0x4a.
+As per the homework assignment, I created a chart showing the memory map for the 5 items listed.  This can be found in the PDF file called "BeagleboneMemoryMap.pdf"
 
-NOTE: I decied to use python as it allows me to also control the LED display for a temperature graph without re-writing my LED code.
+### Part 2,  GPIO vio mmap:
 
-In addition to setting up interrupts to alert the user when the temperature goes outside a set range (see lines 7 and 9, temperatures are all in F), the TMP101s are running in 12-bit mode.
-I also connected up the 8x8 LED matrix and set it up so it as a time-series graph of the two temperature sensors. 
+I modified the file given to us such that the two switched control two LEDs the PAUSE button and a button hooked up to GP0_3 were used to control the RED and GREEN onboard LEDs. The pause button is on GPIO port 2, and GP0_3 is on GPIO port 1.  
+The beaglebone_gpio.h file was also modified to includ ethe correct GPIO ports and external PINs.
 
+To compile, run `$bone node etchasketch.js #rows #cols`
+To execute code, run  `$bone sudo ./gpioThru`
 
-### Part 2:
+### Part 3 Rotary Encoders:
+I modified my etchasketch from last week to be controllable by two rotary encoders connected to Encoder ports 2 and 3.  
+To execute this program, run `$bone python3 etchasketch_LED_Encoders.py`
 
-"python3 etchasketch_LED.py" is an etchascketch that is controlled by 4 buttons connected to GP0 to move around. 
+One encoder moves the cursor left and right, the other moves the cursor up and down.
 
-It is connected to an i2c LED display, and thus the size is fixed at 8x8. The LED matrix should mirror the terminal display.
