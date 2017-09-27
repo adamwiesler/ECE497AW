@@ -17,3 +17,7 @@ I also connected up the 8x8 LED matrix and set it up so it as a time-series grap
 "python3 etchasketch_LED.py" is an etchascketch that is controlled by 4 buttons connected to GP0 to move around. 
 
 It is connected to an i2c LED display, and thus the size is fixed at 8x8. The LED matrix should mirror the terminal display.
+
+# Comments from Prof. Yoder
+# Looks good.  Nice instructions.
+# Grade:  10/10
