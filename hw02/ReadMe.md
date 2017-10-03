@@ -6,3 +6,7 @@ There are two files, "buttons.py" and "etchasketch.py"
 
 "etchasketch.py" is an etchascketch that is controlled by 4 buttons connected to GP0 to move around. 
 One can change the size from the default 8x8 grid by running the command "python3 etchasketch.py RR CC" where RR and CC represent the number of rows and columns desired
+
+# Comments from Prof. Yoder
+# Looks good. 
+# Grade:  10/10
