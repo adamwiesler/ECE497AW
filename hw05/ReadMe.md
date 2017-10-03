@@ -12,6 +12,7 @@ Answers to questions:
 	background-color: green;
 
 }
+
 4. I plan to modify the exesting code in such a way that the entire status of the LED matrix is read into a 2d integer array at the beginning, where each entry can be 0-3, with a 0 is off, 1 being green, two red, and three yellow.  Then, when an LED is clicked, the LEDclick function will read the 2d array, make an 8 bit integer with the new column value, and send it over i2c using the socket.emit call. The browser will also be changed by adding additional css entries to the css file for the different colors.
 5. See commit for code. No changes to boneServer were necessary.
 
