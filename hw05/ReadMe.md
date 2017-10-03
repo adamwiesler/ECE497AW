@@ -18,6 +18,6 @@ Answers to questions:
 5. See commit for code. No changes to boneServer were necessary.
 
 
-To run server: `$bone sudp node boneServer.js`
+To run server: `$bone sudo node boneServer.js`
 Then point browser to http://boneip:9090/matrixLED.html
 
