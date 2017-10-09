@@ -18,3 +18,7 @@ To execute this program, run `$bone python3 etchasketch_LED_Encoders.py`
 
 One encoder moves the cursor left and right, the other moves the cursor up and down.
 
+# Comments from Prof. Yoder
+# Found your memory map file
+# Looks good.
+# Grade:  10/10
