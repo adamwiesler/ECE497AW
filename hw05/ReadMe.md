@@ -21,3 +21,7 @@ Answers to questions:
 To run server: `$bone sudo node boneServer.js`
 Then point browser to http://boneip:9090/matrixLED.html
 
+# Comments from Prof. Yoder
+# Found your answers to the questions.  They look good.
+# Thanks for the demo.
+# Grade:  10/10
