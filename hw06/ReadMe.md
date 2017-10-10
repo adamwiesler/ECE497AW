@@ -2,8 +2,9 @@
 
 ### LCD etchasketch:
 
-Install pygame for python3:
-the rcpy only works on python3. There are no pre-built pygame installations for python3.  The below worked for me to get pygames working: 
+Install pygame for python3.
+
+This is required because rcpy only works on python3. There are no pre-built pygame installations for python3.  The below worked for me to get pygames working: 
 
 ```
 sudo apt-get install mercurial python3-dev python3-numpy libav-tools \
@@ -17,5 +18,5 @@ sudo python3 setup.py install
 From <https://askubuntu.com/questions/97717/how-can-i-get-pygame-for-python3>
 
 
-To run my etchasketch, first turn the display "on" using the on script from the displays folder, then run `sudo python3 etchasketch_LCDdisp_Encoders.py RR CC` where RR and CC represent the number of rows and columns desired. default (no entry) is 24x32, giving 10x10 sized cells.
+To run my etchasketch, first turn the display "on" using the on script from the displays folder, then run `sudo python3 etchasketch_LCDdisp_Encoders.py RR CC` where RR and CC represent the number of rows and columns desired. Default (no entry) is 24x32, giving 10x10 sized cells.
 Ctrl+c exits program.
