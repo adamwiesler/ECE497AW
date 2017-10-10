@@ -19,8 +19,8 @@ if len(sys.argv)>2:
     gridSizeRow = int(sys.argv[1]);
     gridSizeCol = int(sys.argv[2]);
 else:
-    gridSizeRow = 8;
-    gridSizeCol = 8;
+    gridSizeRow = 24;
+    gridSizeCol = 32;
 
 LCDWidth = 320;
 LCDHeight = 240;
@@ -172,14 +172,13 @@ def move(row, col):
     writeLCDPixel(position[1],position[0],int(red*255),int(green*255),int(blue*255))
     global position
     global win2
+
     workingPositon = [position[0]+row,position[1]+col]
     workingPositon[0] = min(gridSizeRow-1,max(0,workingPositon[0]))
     workingPositon[1] = min(gridSizeCol-1,max(0,workingPositon[1]))
     position = workingPositon;
     
     
-    #if (position[0] == workingPositon[0]) and (position[1] == workingPositon[1]):
-    #    return
 
     #print("Position = ", position)
     win2.addstr(position[0]+1,position[1]+1,'X',curses.color_pair(3))
