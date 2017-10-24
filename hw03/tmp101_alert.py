@@ -4,9 +4,9 @@
 
 #various parameters for setup:
 #Low temperature setpoint
-tempLow = 72
+tempLow = 74
 #High temperature setpoint
-tempHigh = 75
+tempHigh = 80
 
 #display verticle axis range:
 displayMin = 65
@@ -122,12 +122,14 @@ def setTMP101Settings(device,tHigh,tLow):
     
     tLow12Bit = cTo12Bit(fToC(tLow))
     tHigh12Bit = cTo12Bit(fToC(tHigh))
+    print("tHigh: ", bin(tHigh12Bit[0]), bin(tHigh12Bit[1]))
     bus.write_i2c_block_data(device,2,[tLow12Bit[0],tLow12Bit[1]])      # Set temp lower
     bus.write_i2c_block_data(device,3,[tHigh12Bit[0],tHigh12Bit[1]])    # Set temp upper
 
 
     print("Configuration for device ", "0x{:02x}".format(device), " :","{0:b}".format(bus.read_byte_data(device,1)))
     print("Low Temperature Threshold for device ", "0x{:02x}".format(device), " :",cToF(_12BitToC(flipBytes(bus.read_word_data(device,2)))))
+    print("Low Temperature Threshold for device ", "0x{:02x}".format(device), " :",bin(bus.read_word_data(device,2)))
     print("High Temperature Threshold for device ", "0x{:02x}".format(device), " :",cToF(_12BitToC(flipBytes(bus.read_word_data(device,3)))))
     
 

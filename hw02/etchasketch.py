@@ -4,6 +4,15 @@
 
 #get size based on terminal call. Default to 8. Inputs aren't well sanitized
 import sys
+import os
+import pygame
+import time
+import random
+import curses
+# Import PyBBIO library:
+import Adafruit_BBIO.GPIO as GPIO
+
+
 if len(sys.argv)>2:
     gridSizeRow = int(sys.argv[1]);
     gridSizeCol = int(sys.argv[2]);
@@ -15,10 +24,10 @@ position = [0,0]
 
 print("Rows: ", gridSizeRow, "Cols: ", gridSizeCol)
 
-import time
-import curses
-# Import PyBBIO library:
-import Adafruit_BBIO.GPIO as GPIO
+## Modified slightly from adafruit's tutorial:https://learn.adafruit.com/pi-video-output-using-pygame/pointing-pygame-to-the-framebuffer
+## Using pygame to write to the LCD display connected to fb0.  the "on.sh" script still needs to be run for this to work.
+
+
 
 #Setup the display using curses
 stdscr = curses.initscr()
