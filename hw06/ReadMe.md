@@ -20,3 +20,7 @@ From <https://askubuntu.com/questions/97717/how-can-i-get-pygame-for-python3>
 
 To run my etchasketch, first turn the display "on" using the on script from the displays folder, then run `sudo python3 etchasketch_LCDdisp_Encoders.py RR CC` where RR and CC represent the number of rows and columns desired. Default (no entry) is 24x32, giving 10x10 sized cells.
 Ctrl+c exits program.
+
+// Comments from Prof. Yoder
+// It works!
+// Grade:  10/10
