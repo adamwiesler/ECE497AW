@@ -20,8 +20,8 @@ MODULE_AUTHOR("Derek Molloy");
 MODULE_DESCRIPTION("A Button/LED test driver for the BBB");
 MODULE_VERSION("0.1");
 
-static unsigned int gpioLED = 98;       ///< hard coding the LED gpio for this example to P9_23 (GPIO49)
-static unsigned int gpioButton = 97;   ///< hard coding the button gpio for this example to P9_27 (GPIO115)
+static unsigned int gpioLED = 97;       ///< hard coding the LED gpio for this example to P9_23 (GPIO49)
+static unsigned int gpioButton = 98;   ///< hard coding the button gpio for this example to P9_27 (GPIO115)
 static unsigned int irqNumber;          ///< Used to share the IRQ number within this file
 static unsigned int numberPresses = 0;  ///< For information, store the number of button presses
 static bool	    ledOn = 0;          ///< Is the LED on or off? Used to invert its state (off by default)
@@ -66,7 +66,7 @@ static int __init ebbgpio_init(void){
    // This next call requests an interrupt line
    result = request_irq(irqNumber,             // The interrupt number requested
                         (irq_handler_t) ebbgpio_irq_handler, // The pointer to the handler function below
-                        IRQF_TRIGGER_RISING,   // Interrupt on rising edge (button press, not release)
+                        IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING,   // Interrupt on rising edge (button press, not release)
                         "ebb_gpio_handler",    // Used in /proc/interrupts to identify the owner
                         NULL);                 // The *dev_id for shared interrupt lines, NULL is okay
 

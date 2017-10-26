@@ -1,0 +1,1 @@
+cmd_/home/debian/ECE497AW/hw07/kernel/gpio_test.ko := ld -EL -r  -T ./scripts/module-common.lds --build-id  -T ./arch/arm/kernel/module.lds -o /home/debian/ECE497AW/hw07/kernel/gpio_test.ko /home/debian/ECE497AW/hw07/kernel/gpio_test.o /home/debian/ECE497AW/hw07/kernel/gpio_test.mod.o
