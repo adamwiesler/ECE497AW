@@ -13,3 +13,7 @@ The mmap method is run by "sudo ./mmap/gpioThru"
 Finally, running "sudo insmod kernel/gpio_test.ko" inserts the kernal module.
 
 
+// Comments from Prof. Yoder
+// Results look good, but your python CPU usage is much higher than other, though I don't see anything odd in your code.
+// Project page: Good start
+// Grade:  10/10
