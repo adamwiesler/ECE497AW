@@ -1,97 +1,68 @@
 #!/usr/bin/node
-// From Getting Started With node.js and socket.io 
+// From Getting Started With node.js and socket.io
 // http://codehenge.net/blog/2011/12/getting-started-with-node-js-and-socket-io-v0-7-part-2/
 // This is a general server for the various web frontends
 // buttonBox, ioPlot, realtimeDemo
 "use strict";
-var can = require('socketcan');
-var myBuffer = require('buffer');
+// var can = require('socketcan');
+// var myBuffer = require('buffer');
+const repl = require('repl');
+const path = require('path');
+const WebSocket = require('ws');
+const express = require('express');
 
+// Setup express web server
+const app = express();
+const server = require('http').Server(app);
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public', 'CANbus.html'));
+});
+app.listen(9090, () => console.log('Example app listening on port 9090!'));
+app.use(express.static('public'));
 
-var port = 9090, // Port to listen on
-    bus = '/dev/i2c-1',
-    busNum = 1,     // i2c bus number
-    i2cNum = 0,             // Remembers the address of the last request
-    http = require('http'),
-    url = require('url'),
-    fs = require('fs'),
-    b = require('bonescript'),
-    child_process = require('child_process'),
-    server,
-    connectCount = 0,	// Number of connections to server
-    errCount = 0;	// Counts the AIN errors.
-    
+// CANbus setup
 var channel;
-var CANpayload = [];
+var CANpayload = { 9999: {id: 9999, ms: Date.now(), data: [0,1,2,3,4,5,6,7] } };
 function initCAN() {
     channel = can.createRawChannel("can0", true);
-    
+
     // Log any message
     channel.addListener("onMessage", function(msg) {
-        CANpayload[msg.id] = msg.data;
-       //console.log(CANpayload[msg.id])
-
+        CANpayload[msg.id] = {
+          id: msg.id,
+          ms: (msg.ts_sec*1000 + parseInt(msg.ts_usec/1000)),
+          data: Array.prototype.slice.call(msg.data,0),
+        }
     } );
-    
+
     // Reply any message
     channel.addListener("onMessage", channel.send, channel);
-    
+
     channel.start();
 }
+// initCAN();
 
-function send404(res) {
-    res.writeHead(404);
-    res.write('404');
-    res.end();
+// Websocket
+const wss = new WebSocket.Server({ port: 9091 });
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(message) {
+    let msgObj = JSON.parse(message);
+    if (typeof msgObj === 'object' && typeof msgObj.rq === 'string' && msgObj.rq === 'CAN') {
+      sendCAN(ws, msgObj.payload);
+    }
+    // console.log('received: %s', JSON.stringify(msgObj));
+  });
+});
+
+function sendCAN(ws, id) {
+  // var arr = Array.prototype.slice.call(CANpayload[id], 0);
+  // console.log("Got Request for CAN data: "+arr+ " for ID " +id);
+  CANpayload[9999]['ms'] = Date.now();
+  CANpayload[9999]['data'][1] = parseInt(Math.random()*256);
+  ws.send(JSON.stringify({ rq: 'CAN', payload: CANpayload[id] }));
 }
 
-initCAN();
-
-
-server = http.createServer(function (req, res) {
-// server code
-    var path = url.parse(req.url).pathname;
-    console.log("path: " + path);
-    if (path === '/') {
-        path = '/CANbus.html';
-    }
-
-    fs.readFile(__dirname + path, function (err, data) {
-        if (err) {return send404(res); }
-//            console.log("path2: " + path);
-        res.write(data, 'utf8');
-        res.end();
-    });
-});
-
-server.listen(port);
-console.log("Listening on " + port);
-
-// socket.io, I choose you
-var io = require('socket.io').listen(server);
-io.set('log level', 2);
-
-// See https://github.com/LearnBoost/socket.io/wiki/Exposed-events
-// for Exposed events
-
-// on a 'connection' event
-io.sockets.on('connection', function (socket) {
-
-    console.log("Connection " + socket.id + " accepted.");
-//    console.log("socket: " + socket);
-
-//Respond to CANbus message request:
-    socket.on('CAN', function (messageID) {
-            var arr = Array.prototype.slice.call(CANpayload[messageID], 0)
-            console.log("Got Request for CAN data: "+arr+ " for ID " +messageID)
-            socket.emit('CAN', arr);
-    });
-    socket.on('disconnect', function () {
-        console.log("Connection " + socket.id + " terminated.");
-        connectCount--;
-        console.log("connectCount = " + connectCount);
-    });
-
-    connectCount++;
-    console.log("connectCount = " + connectCount);
-});
+repl.start({
+  prompt: 'CANbus> ',
+  useGlobal: false,
+}).context.CAN = CANpayload;
