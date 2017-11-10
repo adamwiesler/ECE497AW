@@ -23,23 +23,52 @@ app.controller("AngularController", function($scope, $http) {
   $scope.dataPeriod = 100;
   $scope.dataTimer;
   $scope.requestCANData = function() {
-    const rq = JSON.stringify({ rq: 'CAN', payload: 9999 });
+    const rq = JSON.stringify({ rq: 'CAN', payload: 1349 });
     websock.send(rq); // Request can message ID 1349 from the server
   }
+  
+  
+  
+  //*************************************************
+  // Monitor Numeric Input
+  //*************************************************
+  $scope.byteVal = 0;
+  $scope.byteInput = 0;
+  $scope.byteChange = function() {
+  }
+
+  
+  //
 
   $scope.setRequestInterval = function(o) {
     clearInterval(o.dataTimer);
     o.dataTimer = setInterval(o.requestCANData, o.dataPeriod);
   }
   $scope.setRequestInterval($scope);
-
+  $scope.LEDColor = [];
   websock.onmessage = function (event) {
     // console.log(event.data);
     const inData = JSON.parse(event.data);
     if (typeof inData === 'object' && typeof inData.rq === 'string' && inData.rq === 'CAN') {
       $scope.CANData[inData.payload.id] = inData.payload;
       $scope.$apply();
-      highChart.get('CANData').addPoint([inData.payload.ms, inData.payload.data[1]], true, true);
+      highChart.get('CANData').addPoint([inData.payload.ms, inData.payload.data[$scope.byteInput]], true, true);
+      
+      
+//      Populate bit array; change LED colors
+      for(var index = 0; index < 8; index++){
+        if((((inData.payload.data[$scope.byteInput])>>index)&1) == 0){
+          $scope.LEDColor[index] = 'led-red';
+        }
+        else if((((inData.payload.data[$scope.byteInput])>>index)&1) == 1){
+          $scope.LEDColor[index] = 'led-green';
+        }
+        else{
+          $scope.LEDColor[index] = 'led-grey';
+        }
+
+      }
+      
     }
   }
 

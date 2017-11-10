@@ -9,7 +9,7 @@ channel.addListener("onMessage", function(msg) {
     
     var payload = msg.data
     var arr = Array.prototype.slice.call(payload, 0)
-    console.log(payload)
+    console.log(msg)
 
 } );
 

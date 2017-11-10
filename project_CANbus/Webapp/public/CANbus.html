@@ -6,6 +6,7 @@
     <!-- <script src="/socket.io/socket.io.js"></script> -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/highcharts.css">
+    <link rel="stylesheet" href="css/leds.css">
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -20,14 +21,99 @@
     </nav>
     <div class="container-fluid" ng-app="myApp" ng-controller="AngularController">
   <!-- Content here -->
+     <div class="container-fluid"> 
       <div class="card">
         <h3 class="card-header">CAN data plot</h3>
         <div class="card-block">
-            <div id="Chart1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+
+          <div class= "container-fluid">
+           <div class="row">  
+             Byte to be Plotted: 
+             <input class="form-control" type="number" value=0 ng-change="byteChange()" ng-model="byteInput" max=7 min=0>
+           </div>  
+           <div class="row">  
+            <div class="col">  bytev
+             <div id="Chart1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            </div>  
+           </div>  
+           <div class="row">  
+             <h7>CAN Data Received from ID:1349 Byte:{{byteInput}} is {{CANData[1349]['data'][0]}}</h7>
+           </div>  
+
+           <div class="row"> 
+            <div class="col">B7</div>
+            <div class="col">B6</div>
+            <div class="col">B5</div>
+            <div class="col">B4</div>
+            <div class="col">B3</div>
+            <div class="col">B2</div>
+            <div class="col">B1</div>
+            <div class="col">B0</div>
+           </div>
+
+
+           <div class="row">  
+
+            <div class="col">
+             <div class="led-box">
+              <div ng-class="LEDColor[7]"></div>
+             </div>
+            </div>
+
+            <div class="col">
+             <div class="led-box">
+              <div ng-class="LEDColor[6]"></div>
+             </div>
+            </div>
+
+            <div class="col">
+             <div class="led-box">
+              <div ng-class="LEDColor[5]"></div>
+             </div>
+            </div>
+
+            <div class="col">
+             <div class="led-box">
+              <div ng-class="LEDColor[4]"></div>
+             </div>
+            </div>
+
+            <div class="col">
+             <div class="led-box">
+              <div ng-class="LEDColor[3]"></div>
+             </div>
+            </div>
+
+            <div class="col">
+             <div class="led-box">
+              <div ng-class="LEDColor[2]"></div>
+             </div>
+            </div>
+
+            <div class="col">
+             <div class="led-box">
+              <div ng-class="LEDColor[1]"></div>
+             </div>
+            </div>
+
+            <div class="col">
+             <div class="led-box">
+              <div ng-class="LEDColor[0]"></div>
+             </div>
+            </div>
+
+           </div>  
+
+           
+
+          
+          
+          
         </div>
-        <div>
-          Hello World {{CANData[9999]['data'][1]}}
         </div>
+      </div>  
       </div>
     </div>
   </body>

@@ -4,7 +4,7 @@
 // This is a general server for the various web frontends
 // buttonBox, ioPlot, realtimeDemo
 "use strict";
-// var can = require('socketcan');
+const can = require('socketcan');
 // var myBuffer = require('buffer');
 const repl = require('repl');
 const path = require('path');
@@ -40,7 +40,7 @@ function initCAN() {
 
     channel.start();
 }
-// initCAN();
+initCAN();
 
 // Websocket
 const wss = new WebSocket.Server({ port: 9091 });
